@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freezing Point Depression</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('fpd.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            position: relative;
+            cursor: url('wand.png'), auto;
+            overflow-x: hidden;
+        }
+
+	.extra-button {
+            position: absolute;
+            top: 74%;
+            right: 5%;
+	    cursor: url('wand.png'), auto;
+        }
+	.extra-button img {
+            width: 220px;
+            height: auto;
+	}
+
+        select, button {
+            width: 350px;
+            height: 50px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            font-family: Times New Roman;
+            font-size: 25px;
+            color: #4f2f01;
+            text-align: center;
+            cursor: url('wand.png'), auto;
+        }
+
+        input[type="number"] {
+            width: 350px;
+            height: 50px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            font-family: Times New Roman;
+            font-size: 30px;
+            color: #4f2f01;
+            text-align: center;
+            cursor: url('wand.png'), auto;
+            line-height: 50px;
+        }
+        
+        button {
+            background-color: #967639;
+            color: white;
+            cursor: url('wand.png'), auto;
+        }
+
+        button:hover {
+            background-color: #000000;
+        }
+        #result-container {
+            margin-top: 5%;
+            font-size: 25px;
+            font-family: Times New Roman;
+            color: #291800;
+            text-align: center;
+            padding: 10px;
+            width: 370px;
+            height: 107px;
+            background-image: url('banner.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #result-container p {
+            line-height: 1;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div>
+    <select id="solvent" style="position: absolute; top: 36%; left: 50%;">
+        <option value="aniline">Aniline</option>
+        <option value="lauric_acid">Lauric Acid</option>
+        <option value="acetic_acid">Acetic Acid</option>
+        <option value="benzene">Benzene</option>
+        <option value="camphor">Camphor</option>
+        <option value="carbon_disulfide">Carbon Disulfide</option>
+        <option value="carbon_tetrachloride">Carbon Tetrachloride</option>
+        <option value="chloroform">Chloroform</option>
+        <option value="cyclohexane">Cyclohexane</option>
+        <option value="diethyl_ether">Diethyl Ether</option>
+        <option value="ethanol">Ethanol</option>
+        <option value="ethylene_bromide">Ethylene Bromide</option>
+        <option value="ethylene_glycol">Ethylene Glycol</option>
+        <option value="formic_acid">Formic Acid</option>
+        <option value="naphthalene">Naphthalene</option>
+        <option value="nitrobenzene">Nitrobenzene</option>
+        <option value="phenol">Phenol</option>
+        <option value="water">Water</option>
+    </select>
+
+    <select id="solute" style="position: absolute; top: 43%; left: 50%;">
+        <option value="glucose">Glucose</option>
+        <option value="sucrose">Sucrose</option>
+        <option value="lactose">Lactose</option>
+        <option value="glycerol">Glycerol</option>
+        <option value="urea">Urea</option>
+        <option value="sodium_chloride">Sodium Chloride</option>
+        <option value="potassium_chloride">Potassium Chloride</option>
+        <option value="calcium_carbonate">Calcium Carbonate</option>
+        <option value="magnesium_sulfate">Magnesium Sulfate</option>
+        <option value="maltose">Maltose</option>
+        <option value="fructose">Fructose</option>
+        <option value="sucralose">Sucralose</option>
+        <option value="sodium_bicarbonate">Sodium Bicarbonate</option>
+        <option value="ammonium_chloride">Ammonium Chloride</option>
+        <option value="sodium_nitrate">Sodium Nitrate</option>
+        <option value="calcium_chloride">Calcium Chloride</option>
+        <option value="potassium_nitrate">Potassium Nitrate</option>
+        <option value="magnesium_chloride">Magnesium Chloride</option>
+        <option value="lactic_acid">Lactic Acid</option>
+        <option value="citric_acid">Citric Acid</option>
+        <option value="acetic_acid">Acetic Acid</option>
+        <option value="malic_acid">Malic Acid</option>
+        <option value="tartaric_acid">Tartaric Acid</option>
+        <option value="sodium_hydroxide">Sodium Hydroxide</option>
+        <option value="potassium_hydroxide">Potassium Hydroxide</option>
+        <option value="ammonium_hydroxide">Ammonium Hydroxide</option>
+        <option value="calcium_hydroxide">Calcium Hydroxide</option>
+        <option value="magnesium_hydroxide">Magnesium Hydroxide</option>
+        <option value="aluminum_hydroxide">Aluminum Hydroxide</option>
+    </select>
+
+    <input type="number" id="soluteamt" step="1" min="0" style="position: absolute; top: 50%; left: 50%;" required>
+    <input type="number" id="solventamt" step="1" min="0" style="position: absolute; top: 57%; left: 50%;" required>
+
+    <button onclick="calculateFreezingPointDepression()" style="position: absolute; top: 65%; left: 50%; transform: translateX(-50%);">Calculate</button>
+    <p id="result-container" style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%);"></p>
+</div>
+
+<a href="CalcPchem.html" class="extra-button">
+    <img src="back.png" alt="Extra Button">
+</a>
+
+<script>
+    function calculateFreezingPointDepression() {
+        var solvent = document.getElementById('solvent').value;
+        var solute = document.getElementById('solute').value;
+        var soluteamt = parseFloat(document.getElementById('soluteamt').value);
+        var solventamt = parseFloat(document.getElementById('solventamt').value);
+
+        var molarMassSolute;
+        switch (solute) {
+            case 'glucose':
+                molarMassSolute = 180.16;
+                break;
+            case 'sucrose':
+                molarMassSolute = 342.30;
+                break;
+            case 'lactose':
+                molarMassSolute = 342.30;
+                break;
+            case 'glycerol':
+                molarMassSolute = 92.09;
+                break;
+            case 'urea':
+                molarMassSolute = 60.06;
+                break;
+            case 'sodium_chloride':
+                molarMassSolute = 58.44;
+                break;
+            case 'potassium_chloride':
+                molarMassSolute = 74.55;
+                break;
+            case 'calcium_carbonate':
+                molarMassSolute = 100.09;
+                break;
+            case 'magnesium_sulfate':
+                molarMassSolute = 120.37;
+                break;
+            case 'maltose':
+                molarMassSolute = 342.30;
+                break;
+            case 'fructose':
+                molarMassSolute = 180.16;
+                break;
+            case 'sucralose':
+                molarMassSolute = 397.64;
+                break;
+            case 'sodium_bicarbonate':
+                molarMassSolute = 84.01;
+                break;
+            case 'ammonium_chloride':
+                molarMassSolute = 53.49;
+                break;
+            case 'sodium_nitrate':
+                molarMassSolute = 84.99;
+                break;
+            case 'calcium_chloride':
+                molarMassSolute = 110.98;
+                break;
+            case 'potassium_nitrate':
+                molarMassSolute = 101.10;
+                break;
+            case 'magnesium_chloride':
+                molarMassSolute = 95.21;
+                break;
+            case 'lactic_acid':
+                molarMassSolute = 90.08;
+                break;
+            case 'citric_acid':
+                molarMassSolute = 192.13;
+                break;
+            case 'acetic_acid':
+                molarMassSolute = 60.05;
+                break;
+            case 'malic_acid':
+                molarMassSolute = 134.09;
+                break;
+            case 'tartaric_acid':
+                molarMassSolute = 150.09;
+                break;
+            case 'sodium_hydroxide':
+                molarMassSolute = 40.00;
+                break;
+            case 'potassium_hydroxide':
+                molarMassSolute = 56.11;
+                break;
+            case 'ammonium_hydroxide':
+                molarMassSolute = 35.05;
+                break;
+            case 'calcium_hydroxide':
+                molarMassSolute = 74.09;
+                break;
+            case 'magnesium_hydroxide':
+                molarMassSolute = 58.32;
+                break;
+            case 'aluminum_hydroxide':
+                molarMassSolute = 78.00;
+                break;
+        }
+
+        var Kf;
+        var freezingPoint;
+        switch (solvent) {
+            case 'aniline':
+                Kf = -5.87;
+                freezingPoint = -5.96;
+                break;
+            case 'lauric_acid':
+                Kf = -3.9;
+                freezingPoint = 44;
+                break;
+            case 'acetic_acid':
+                Kf = -3.90;
+                freezingPoint = 16.6;
+                break;
+            case 'benzene':
+                Kf = -5.12;
+                freezingPoint = 5.5;
+                break;
+            case 'camphor':
+                Kf = -40.0;
+                freezingPoint = 179;
+                break;
+            case 'carbon_disulfide':
+                Kf = -3.83;
+                freezingPoint = -111.5;
+                break;
+            case 'carbon_tetrachloride':
+                Kf = -29.8;
+                freezingPoint = -22.8;
+                break;
+            case 'chloroform':
+                Kf = -4.90;
+                freezingPoint = -63.5;
+                break;
+            case 'cyclohexane':
+                Kf = -20.2;
+                freezingPoint = 6.55;
+                break;
+            case 'diethyl_ether':
+                Kf = -1.79;
+                freezingPoint = -193.58;
+                break;
+            case 'ethanol':
+                Kf = -1.99;
+                freezingPoint = -114.6;
+                break;
+            case 'ethylene_bromide':
+                Kf = -12.5;
+                freezingPoint = 9.974;
+                break;
+            case 'ethylene_glycol':
+                Kf = -3.11;
+                freezingPoint = -12.9;
+                break;
+            case 'formic_acid':
+                Kf = -2.77;
+                freezingPoint = 8;
+                break;
+            case 'naphthalene':
+                Kf = -6.8;
+                freezingPoint = 78.2;
+                break;
+            case 'nitrobenzene':
+                Kf = -7.0;
+                freezingPoint = 5.7;
+                break;
+            case 'phenol':
+                Kf = -7.27;
+                freezingPoint = 43;
+                break;
+            case 'water':
+                Kf = -1.86;
+                freezingPoint = 0.0;
+                break;
+        }
+
+        var freezingPointDepression = (Kf * 1000 * soluteamt) / (molarMassSolute * solventamt);
+        var nbp = freezingPoint + freezingPointDepression;
+
+        document.getElementById('result-container').innerHTML = freezingPointDepression.toFixed(4) + " ℃<br> Freezing Point: " + nbp.toFixed(4) + " ℃";
+    }
+
+</script>
+</body>
+</html>
